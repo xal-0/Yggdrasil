@@ -53,6 +53,10 @@ cd [Ss]ingular*
 
 ./autogen.sh
 export CPPFLAGS="-I${prefix}/include"
+# autogen.sh strips autoconf's default -O2 from every configure; omalloc, unlike
+# the other subprojects, adds no optimization flags of its own and would build at -O0
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 
 # lld doesn't support -r and -keep_private_externs which the Singular build uses
 # switch back to ld on macos to avoid errors:
