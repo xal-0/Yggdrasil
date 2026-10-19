@@ -18,8 +18,8 @@ cd $WORKSPACE/srcdir/nettle-*
 # kernel headers, rather than the glibc headers, since our glibc is too old
 atomic_patch -p1 ../patches/AT_HWCAP2-linux_headers.patch
 
-# Force c99 mode
-export CFLAGS="${CFLAGS} -std=c99"
+# Force c99 mode; setting CFLAGS drops autoconf's default -O2
+export CFLAGS="${CFLAGS} -O2 -std=c99"
 
 update_configure_scripts
 ./configure --prefix=${prefix} --build=${MACHTYPE} --host=${target} --with-include-path=${includedir}
