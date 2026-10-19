@@ -97,10 +97,12 @@ fi
 # macOS, and cmake does not handle this option well. cmake assumes
 # that this is one option and one file name and splits them up.
 
-export CFLAGS='-fPIC -DPIC'
-export CXXFLAGS='-fPIC -DPIC'
-export FFLAGS='-fPIC -DPIC'
-export FCFLAGS='-fPIC -DPIC'
+# `--enable-fast` adds `-O2` only to MPICH's own sources; the bundled hwloc,
+# MPL, ROMIO, etc. are configured with just these flags.
+export CFLAGS='-fPIC -DPIC -O2'
+export CXXFLAGS='-fPIC -DPIC -O2'
+export FFLAGS='-fPIC -DPIC -O2'
+export FCFLAGS='-fPIC -DPIC -O2'
 
 if [[ "${target}" == *-apple-* ]]; then
     # MPICH uses the link options `-flat_namespace` on Darwin. This
@@ -205,7 +207,7 @@ fi
 cd $WORKSPACE/srcdir/MPItrampoline*
 atomic_patch -p1 ${WORKSPACE}/srcdir/patches/fortran_sentinels_data.patch
 cmake -B build \
-    -DCMAKE_BUILD_TYPE_TYPE=RelWithDebInfo \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} \
     -DCMAKE_FIND_ROOT_PATH=$prefix \
     -DCMAKE_INSTALL_PREFIX=$prefix \
